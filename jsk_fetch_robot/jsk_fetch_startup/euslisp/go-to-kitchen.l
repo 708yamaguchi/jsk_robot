@@ -4,7 +4,8 @@
 (defun go-to-kitchen ()
   ;; call k-okada
   (send *ri* :speak "go to kitchen.")
-  (go-to-spot "/eng2/7f/room73B2-sink-front1")
+  (go-to-spot "/eng2/7f/room73B2-sink-front1" (make-coords :pos #f(100 -1000 0)))
+  (unix:sleep 1)
   (send *ri* :speak "arrived at kitchen." :wait t)
   (unix:sleep 1)
   (send *ri* :speak "return to dock." :wait t)
