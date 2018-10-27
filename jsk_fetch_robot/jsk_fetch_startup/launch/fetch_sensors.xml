@@ -14,8 +14,8 @@
   <node name="$(arg manager)" pkg="nodelet" type="nodelet" args="manager"
         if="$(arg launch_manager)" respawn="true" output="screen" />
 
-  <!-- <group ns="head_camera"> -->
-  <!--   <group ns="depth_registered"> -->
+  <group ns="head_camera">
+    <group ns="depth_registered">
   <!--     <node name="resize_cloud" -->
   <!--           pkg="nodelet" type="nodelet" -->
   <!--           args="load jsk_pcl/ResizePointsPublisher /$(arg manager)" -->
@@ -37,20 +37,20 @@
   <!--       <remap from="~output" to="quater/throttled/points" /> -->
   <!--       <param name="update_rate" value="$(arg throttled_rate)" /> -->
   <!--     </node> -->
-  <!--     <node name="relay_image" -->
-  <!--           pkg="nodelet" type="nodelet" -->
-  <!--           args="load jsk_topic_tools/Relay /$(arg manager)" -->
-  <!--           respawn="true"> -->
-  <!--       <remap from="~input" to="hw_registered/image_rect" /> -->
-  <!--       <remap from="~output" to="image_rect" /> -->
-  <!--     </node> -->
-  <!--     <node name="relay_image_compressed" -->
-  <!--           pkg="nodelet" type="nodelet" -->
-  <!--           args="load jsk_topic_tools/Relay /$(arg manager)" -->
-  <!--           respawn="true"> -->
-  <!--       <remap from="~input" to="hw_registered/image_rect/compressedDepth" /> -->
-  <!--       <remap from="~output" to="image_rect/compressedDepth" /> -->
-  <!--     </node> -->
+  <!-- <node name="relay_image" -->
+  <!--       pkg="nodelet" type="nodelet" -->
+  <!--       args="load jsk_topic_tools/Relay /$(arg manager)" -->
+  <!--       respawn="true"> -->
+  <!--   <remap from="~input" to="hw_registered/image_rect" /> -->
+  <!--   <remap from="~output" to="image_rect" /> -->
+  <!-- </node> -->
+  <node name="relay_image_compressed"
+        pkg="nodelet" type="nodelet"
+        args="load jsk_topic_tools/Relay /$(arg manager)"
+        respawn="true">
+    <remap from="~input" to="hw_registered/image_rect/compressedDepth" />
+    <remap from="~output" to="image_rect/compressedDepth" />
+  </node>
   <!--     <node name="throttle_image" -->
   <!--           pkg="nodelet" type="nodelet" -->
   <!--           args="load jsk_topic_tools/LightweightThrottle /$(arg manager)" -->
@@ -121,8 +121,8 @@
   <!--         scale_height: 0.25 -->
   <!--       </rosparam> -->
   <!--     </node> -->
-  <!--   </group> -->
-  <!-- </group> -->
+    </group>
+  </group>
 
   <node name="base_scan_throttle" pkg="topic_tools" type="throttle"
         args="messages base_scan $(arg throttled_rate) base_scan/throttled"
