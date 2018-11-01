@@ -34,12 +34,17 @@
   <node pkg="diagnostic_aggregator" type="aggregator_node"
         name="diag_agg" args="CPP" output="screen" >
     <rosparam command="load" file="$(find jsk_fetch_startup)/config/fetch_analyzers.yaml" />
-    <param name="load1_threshold" value="7.0"/>
-    <param name="load5_threshold" value="5.0"/>
   </node>
 
   <!-- publish CPU status to diagnostics -->
-  <include file="$(find pr2_computer_monitor)/demo/cpu_monitor.launch"/>
+  <node name="cpu_monitor" pkg="pr2_computer_monitor" type="cpu_monitor.py"
+        args="--diag-hostname=my_machine" >
+    <param name="check_ipmi_tool" value="false" type="bool" />
+    <param name="enforce_clock_speed" value="false" type="bool" />
+    <param name="num_cores" value="-1" type="int" />
+    <param name="load1_threshold" value="7.0"/>
+    <param name="load5_threshold" value="5.0"/>
+  </node>
 
   <!-- app manager -->
   <include file="$(find jsk_robot_startup)/lifelog/app_manager.launch"/>
@@ -56,7 +61,7 @@
            if="$(arg launch_teleop)" />
 
   <!-- speech recognition -->
-  <node name="respeaker_node" pkg="respeaker_ros" type="respeaker_node.py"/>
+  <node name="respeaker_node" pkg="respeaker_ros" type="respeaker_node.py" output="screen" respawn="true"/>
   <node name="static_transformer" pkg="tf" type="static_transform_publisher"
         args="0 0 0.1 0 0 0 head_pan_link respeaker_base 100"/>
   <include file="$(find julius_ros)/launch/julius.launch">
