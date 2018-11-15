@@ -42,8 +42,8 @@
     <param name="check_ipmi_tool" value="false" type="bool" />
     <param name="enforce_clock_speed" value="false" type="bool" />
     <param name="num_cores" value="-1" type="int" />
-    <param name="load1_threshold" value="7.0"/>
-    <param name="load5_threshold" value="5.0"/>
+    <param name="load1_threshold" value="100.0"/>
+    <param name="load5_threshold" value="100.0"/>
   </node>
 
   <!-- app manager -->
