@@ -1,6 +1,6 @@
 #!/usr/bin/env roseus
 
-(ros::roseus "go_to_kitchen_with_mail_notify")
+(ros::roseus "patrol")
 (load "package://jsk_fetch_startup/euslisp/navigation-utils.l")
 (ros::roseus-add-srvs "jsk_patrol")
 
