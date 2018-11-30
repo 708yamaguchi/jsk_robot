@@ -41,6 +41,7 @@
   (send *fetch* :head :neck-p :joint-angle 40)
   (send *fetch* :torso_lift_joint :joint-angle 400)
   (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  ;; start taking photos
   (unix:sleep 7) ;; wait for camera image stabilization
   (call-mail-service "73B2 kitchen" ;; *place-name*
                      *mail-title*
@@ -48,6 +49,25 @@
                      *to-address*
                      *message*) ;; calling send mail service
   (send *ri* :speak-jp "かしゃっ")
+  (send *fetch* :head :neck-y :joint-angle (+ 60 (send *fetch* :head :neck-y :joint-angle)))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  (unix:sleep 7) ;; wait for camera image stabilization
+  (call-mail-service "73B2 kitchen" ;; *place-name*
+                     *mail-title*
+                     *from-address*
+                     *to-address*
+                     *message*) ;; calling send mail service
+  (send *ri* :speak-jp "かしゃっ")
+  (send *fetch* :head :neck-y :joint-angle (+ -120 (send *fetch* :head :neck-y :joint-angle)))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  (unix:sleep 7) ;; wait for camera image stabilization
+  (call-mail-service "73B2 kitchen" ;; *place-name*
+                     *mail-title*
+                     *from-address*
+                     *to-address*
+                     *message*) ;; calling send mail service
+  (send *ri* :speak-jp "かしゃっ")
+  ;; stop taking photos
   (send *fetch* :reset-pose)
   (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
   (send *ri* :wait-interpolation)
@@ -62,6 +82,7 @@
   (send *fetch* :head :neck-y :joint-angle -5.9)
   (send *fetch* :torso_lift_joint :joint-angle 400)
   (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  ;; start taking photos
   (unix:sleep 7) ;; wait for camera image stabilization
   (call-mail-service "73B2 table" ;; *place-name*
                      *mail-title*
@@ -69,6 +90,25 @@
                      *to-address*
                      *message*) ;; calling send mail service
   (send *ri* :speak-jp "かしゃっ")
+  (send *fetch* :head :neck-y :joint-angle (+ 60 (send *fetch* :head :neck-y :joint-angle)))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  (unix:sleep 7) ;; wait for camera image stabilization
+  (call-mail-service "73B2 table" ;; *place-name*
+                     *mail-title*
+                     *from-address*
+                     *to-address*
+                     *message*) ;; calling send mail service
+  (send *ri* :speak-jp "かしゃっ")
+  (send *fetch* :head :neck-y :joint-angle (+ -120 (send *fetch* :head :neck-y :joint-angle)))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  (unix:sleep 7) ;; wait for camera image stabilization
+  (call-mail-service "73B2 table" ;; *place-name*
+                     *mail-title*
+                     *from-address*
+                     *to-address*
+                     *message*) ;; calling send mail service
+  (send *ri* :speak-jp "かしゃっ")
+  ;; stop taking photos
   (send *fetch* :reset-pose)
   (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
   (send *ri* :wait-interpolation)
@@ -83,6 +123,7 @@
   (send *fetch* :head :neck-y :joint-angle 32.0)
   (send *fetch* :torso_lift_joint :joint-angle 400)
   (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  ;; start taking photos
   (unix:sleep 7) ;; wait for camera image stabilization
   (call-mail-service "73B2 center" ;; *place-name*
                      *mail-title*
@@ -90,6 +131,25 @@
                      *to-address*
                      *message*) ;; calling send mail service
   (send *ri* :speak-jp "かしゃっ")
+  (send *fetch* :head :neck-y :joint-angle (+ 60 (send *fetch* :head :neck-y :joint-angle)))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  (unix:sleep 7) ;; wait for camera image stabilization
+  (call-mail-service "73B2 center" ;; *place-name*
+                     *mail-title*
+                     *from-address*
+                     *to-address*
+                     *message*) ;; calling send mail service
+  (send *ri* :speak-jp "かしゃっ")
+  (send *fetch* :head :neck-y :joint-angle (+ -120 (send *fetch* :head :neck-y :joint-angle)))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
+  (unix:sleep 7) ;; wait for camera image stabilization
+  (call-mail-service "73B2 center" ;; *place-name*
+                     *mail-title*
+                     *from-address*
+                     *to-address*
+                     *message*) ;; calling send mail service
+  (send *ri* :speak-jp "かしゃっ")
+  ;; stop taking photos
   (send *fetch* :reset-pose)
   (send *ri* :angle-vector (send *fetch* :angle-vector) 500)
   (send *ri* :wait-interpolation)
