@@ -10,6 +10,8 @@
     <arg name="ssd_params_path"
          value="/etc/ros/jsk_data/jsk_fetch_startup/models/73B2_kitchen_ssd_params.yaml" />
     <arg name="input_image" value="/head_camera/rgb/image_rect_color" />
+    <arg name="input_rviz_image" value="/rviz_camera_stream/output" />
+    <arg name="launch_ssd" value="false" />
   </include>
 
 </launch>
