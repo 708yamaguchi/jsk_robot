@@ -127,7 +127,7 @@ class Warning:
         callerid = msg._connection_header['callerid']
         if not self.diagnostics_speak_thread.has_key(callerid):
             self.diagnostics_speak_thread[callerid] = None
-        error_status = filter(lambda n: n.level in [DiagnosticStatus.WARN, DiagnosticStatus.ERROR, DiagnosticStatus.STALE], msg.status)
+        error_status = filter(lambda n: n.level in [DiagnosticStatus.ERROR, DiagnosticStatus.STALE], msg.status)
         # when RunStopped, ignore message from *_mcb and *_breaker
         if self.robot_state_msgs.runstopped:
             error_status = filter(lambda n: not (re.match("\w*_(mcb|breaker)",n.name) or (n.name == "Mainboard" and n.message == "Runstop pressed")), error_status)
