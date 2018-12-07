@@ -93,7 +93,18 @@
         args="0 0 0.1 0 0 0 head_pan_link respeaker_base 100"/>
   <include file="$(find julius_ros)/launch/julius.launch">
     <arg name="launch_audio_capture" value="false"/>
+    <arg name="speech_to_text_topic" value="speech_to_text_julius"/>
   </include>
+  <node name="speech_to_text" pkg="respeaker_ros" type="speech_to_text.py"
+        output="screen">
+    <remap from="audio" to="speech_audio"/>
+    <remap from="speech_to_text" to="speech_to_text_google"/>
+    <rosparam subst_value="true">
+      language: ja-JP  # en-US
+      self_cancellation: true
+      tts_tolerance: 0.5
+    </rosparam>
+  </node>
 
   <group if="$(arg launch_move_base)">
     <!-- jsk_maps -->
