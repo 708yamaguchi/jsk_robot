@@ -68,6 +68,8 @@
        (send* self :angle-vector-sequence-raw avs (make-list div :initial-element (/ tm div)) args)
        (return-from :angle-vector-raw (car (last avs)))))
    (send-super* :angle-vector av tm args))
+  (:test-angle-vector (avs tms)
+                      (send-super :angle-vector-sequence avs tms :arm-controller 0.1 :limit-rotation t))
   (:angle-vector-sequence-raw (&rest args) (send-super* :angle-vector-sequence args))
   (:angle-vector
    (av &optional (tm 3000) &rest args) ;; (ctype controller-type) (start-time 0) &rest args
