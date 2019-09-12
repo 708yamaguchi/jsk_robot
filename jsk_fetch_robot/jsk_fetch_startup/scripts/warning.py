@@ -40,11 +40,21 @@ class DiagnosticsSpeakThread(threading.Thread):
     def __init__(self, error_status):
         threading.Thread.__init__(self)
         self.error_status = error_status
+        # store error status and time of the error in the latest 10 minites
+        self.error_status_in_10_min = {}
         self.start()
 
     def run(self):
         global sound
         for status in  self.error_status:
+            # ignore error status if the error already occured in the latest 10 minites
+            if self.error_status_in_10_min.has_key(status.message):
+                if rospy.Time.now() - self.error_status_in_10_min[status.message] < 600:
+                    continue
+                else:
+                    self.error_status_in_10_min[status.message] = rospy.Time.now()
+            else:
+                self.error_status_in_10_min[status.message] = rospy.Time.now()
             # we can ignore "Joystick not open."
             if status.message == "Joystick not open." :
                 continue
