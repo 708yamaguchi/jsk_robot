@@ -44,12 +44,18 @@
     ;; diff in 3cm
     (assert (< diff-pos 30) (format nil "go-stop does not stop: ~A > 30" diff-pos))))
 
-(defun go-pos-func (&key (x 0.3) (y 0.3) (d 90) (func :go-pos)) ;; [m] [m] [degree]
+(defun go-pos-func (&key (func :go-pos) x y d) ;; [m] [m] [degree]
   (let (pos0 pos1 pos2 diff-pos diff-rot tm0 tm1)
     (setq pos0 (send *ri* :state :worldcoords "map"))
-    (ros::ros-info "send ~A ~A ~A ~A" func x y d)
     (setq tm0 (ros::time-now))
-    (send *ri* func x y d)
+    (if d
+      (progn
+        (ros::ros-info "send ~A ~A ~A ~A" func x y d)
+        (send *ri* func x y d))
+      (progn
+        (ros::ros-info "send ~A ~A ~A" func x y)
+        (send *ri* func x y)
+        (setq d 0)))
     ;; wait for 2 sec
     (send (instance ros::duration :init 2) :sleep)
     (setq tm1 (ros::time-now))
@@ -89,19 +95,32 @@
     ))
 
 (deftest test-go-pos
-  (go-pos-func :func :go-pos))
+  (go-pos-func :func :go-pos :x 0.3 :y 0.3 :d 90))
+
+(deftest test-go-pos-without-rotation
+  (go-pos-func :func :go-pos :x 0.3 :y 0.3))
 
 (deftest test-go-pos-no-wait
-  (go-pos-func :func :go-pos-no-wait))
+  (go-pos-func :func :go-pos-no-wait :x 0.3 :y 0.3 :d 90))
+
+(deftest test-go-pos-no-wait-without-rotation
+  (go-pos-func :func :go-pos-no-wait :x 0.3 :y 0.3))
 
 (deftest test-go-pos-unsafe
-  (go-pos-func :func :go-pos-unsafe))
+  (go-pos-func :func :go-pos-unsafe :x 0.3 :y 0.3 :d 90))
+
+(deftest test-go-pos-unsafe-without-rotation
+  (go-pos-func :func :go-pos-unsafe :x 0.3 :y 0.3))
 
 (deftest test-go-pos-unsafe-no-wait
   (if (*ri* . move-base-trajectory-action)
-      (go-pos-func :func :go-pos-unsafe-no-wait)
+      (go-pos-func :func :go-pos-unsafe-no-wait :x 0.3 :y 0.3 :d 90)
     (ros::ros-warn "SKIP TEST :go-pos-unsafe-no-wait requires move-base-trajectory-action")))
 
+(deftest test-go-pos-unsafe-no-wait-without-rotation
+  (if (*ri* . move-base-trajectory-action)
+      (go-pos-func :func :go-pos-unsafe-no-wait :x 0.3 :y 0.3)
+    (ros::ros-warn "SKIP TEST :go-pos-unsafe-no-wait requires move-base-trajectory-action")))
 
 (defun go-velocity-func (&key wait)
   (let ((vel-x 1) (vel-y 0) (vel-d 1.57)  ;; [m/s] [m/s] [rad/s]
