@@ -249,7 +249,9 @@ Example: (send self :gripper :position) => 0.00"
     (labels ((shortest-angle
               (d0 d1)
               (atan2 (sin (- d0 d1)) (cos (- d0 d1)))))
-      (let* ((goal (send self :get :go-pos-unsafe-no-wait-goal))
+      (let* ((goal-args (send self :get :go-pos-unsafe-no-wait-goal))
+             (goal (if (eq (length goal-args) 2)
+                     (concatenate float-vector goal-args (list 0)) goal-args))
              (x (aref goal 0))
              (y (aref goal 1))
              (d (aref goal 2))
