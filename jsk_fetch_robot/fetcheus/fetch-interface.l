@@ -32,7 +32,10 @@
      ))
   (:state (&rest args)
    ":state calls with :wait-until-update by default, since Fetch publishes /joint_states from body and gripper at almost same frequency"
-   (send-super* :state (if (member :wait-until-update args) args (append args (list :wait-until-update t)))))
+   (send-super* :state
+                (if (or (eq (car args) :worldcoords)
+                        (member :wait-until-update args))
+                    args (append args (list :wait-until-update t)))))
   (:check-continuous-joint-move-over-180 ;; can be removed if http//github.com/jsk-ros-pkg/jsk_pr2eus/pull/322 merged
    (diff-av)
    (let ((i 0) add-new-trajectory-point)
@@ -256,12 +259,13 @@ Example: (send self :gripper :position) => 0.00"
              (forward-p (>= x 0))
              (d0 (if forward-p (atan2 y x) (atan2 (- y) (- x))))
              (d1 (distance (float-vector 0 0) (float-vector x y)))
-             (d2 (shortest-angle (- d d0) 0))
+             (d2 (shortest-angle (- (deg2rad d) d0) 0))
              org-cds cur-cds diffrot diffpos err)
         (send self :remprop :go-pos-unsafe-no-wait-goal)
 
         ;; yaw-x-yaw approach
-        (ros::ros-info "go-pos-unsafe: (yaw, x, yaw) = (~A ~A ~A)" d0 d1 d2)
+        (ros::ros-info "go-pos-unsafe: (yaw, x, yaw) = (~A ~A ~A)"
+                       d0 (* (if forward-p 1.0 -1.0) d1) d2)
 
         ;; yaw
         (send self :spin-once)
@@ -329,6 +333,10 @@ Example: (send self :gripper :position) => 0.00"
                 d-vel (* (if (>= d-vel 0) 1.0 -1.0) min-rotation-abs-vel))))
           (ros::sleep))
         t)))
+  (:move-to-wait (&rest args)
+    (send-super* :move-to-wait
+                 (if (member :correction args) args
+                     (append args (list :correction nil)))))
 ) ;; fetch-interface (simple base actions)
 
 (defun fetch-init (&optional (create-viewer))

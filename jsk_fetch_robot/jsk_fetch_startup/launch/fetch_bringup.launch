@@ -7,6 +7,8 @@
   <arg name="map_frame" default="eng2" />
   <arg name="map_file" default="$(find jsk_maps)/raw_maps/eng2-7f-0.05.yaml"/>
   <arg name="keepout_map_file" default="$(find jsk_maps)/raw_maps/eng2-7f-0.05_keepout.yaml" />
+  <arg name="use_keepout" default="true" />
+  <arg name="use_build_map" default="false" />
 
   <param name="robot/type" value="fetch" />
   <param name="robot/name" command='bash -c "hostname | xargs echo -n"' />
@@ -74,9 +76,16 @@
 
   <!-- app manager -->
   <include file="$(find jsk_robot_startup)/lifelog/app_manager.launch">
-    <arg name="use_applist" value="true" />
-    <arg name="applist" value="$(find jsk_fetch_startup)/apps"/>
+    <arg name="use_applist" value="false" /> <!-- use plugin -->
     <arg name="respawn" value="false" />
+    <arg name="basic" value="true" />
+    <arg name="basic_yaml" value="/var/lib/robot/roswww_basic_keys.yaml" />
+  </include>
+
+  <!-- rwt_image_view -->
+  <include file="$(find jsk_robot_startup)/lifelog/rwt_image_view.launch">
+    <arg name="launch_roswww" value="false" />
+    <arg name="launch_websocket" value="false" />
   </include>
 
   <!-- downsample / throttle sensor data -->
@@ -87,10 +96,16 @@
   <!-- include fetch moveit -->
   <include file="$(find fetch_moveit_config)/launch/move_group.launch"
            if="$(arg launch_moveit)" />
+  <!-- overwrite fetch.srdf -->
+  <!-- The semantic description that corresponds to the URDF -->
+  <param name="robot_description_semantic"
+         command="rosrun xacro xacro --inorder $(find jsk_fetch_startup)/launch/moveit/fetch.srdf.xacro" />
 
   <!-- teleop -->
   <include file="$(find jsk_fetch_startup)/launch/fetch_teleop.xml"
-           if="$(arg launch_teleop)" />
+           if="$(arg launch_teleop)" >
+      <arg name="odom_topic" value="/odom_combined" />
+  </include>
 
   <!-- speech recognition -->
   <node name="respeaker_transformer" pkg="tf" type="static_transform_publisher"
@@ -123,18 +138,28 @@
   <group if="$(arg launch_move_base)">
     <!-- jsk_maps -->
     <include file="$(find jsk_maps)/launch/start_map_$(arg map_frame).launch">
-      <arg name="launch_map_server" value="false" />
+      <arg name="launch_map_server" value="true" />
+      <arg name="keepout" value="$(arg use_keepout)" />
     </include>
 
     <!-- dock localization -->
     <node pkg="jsk_fetch_startup" type="correct_position.py" name="correct_position" respawn="true" />
 
     <!-- include fetch_navigation -->
-    <include file="$(find fetch_navigation)/launch/fetch_nav.launch" >
+    <include file="$(find fetch_navigation)/launch/fetch_nav.launch" unless="$(arg use_build_map)" >
       <arg name="map_file" value="$(arg map_file)" />
       <arg name="map_keepout_file" value="$(arg keepout_map_file)" />
-      <arg name="use_keepout" value="true" />
+      <arg name="use_keepout" value="$(arg use_keepout)" />
+      <arg name="use_map_topic" value="true" />
+      <arg name="launch_map_server" value="false" />
+      <arg name="odom_topic" value="/odom_combined" />
     </include>
+
+    <!-- slam for build a map -->
+    <node pkg="slam_karto" type="slam_karto" name="slam_karto"
+          output="screen" if="$(arg use_build_map)" >
+      <remap from="scam" to="base_scan"/>
+    </node>
 
     <!-- robot localization ukf -->
     <node pkg="robot_localization" type="ukf_localization_node" name="ukf_se" clear_params="true">
@@ -158,23 +183,27 @@
         odom0_differential: true
         imu0: /imu_corrected
         imu0_config: [false, false, false,
-                      false, false, false,
+                      false, false, true,
                       false, false, false,
                       false, false, true,
-                      true, true, false]
+                      true, false, false]
         imu0_nodelay: true
         imu0_differential: true
-        imu0_remove_gravitational_acceleration: true
+        imu0_remove_gravitational_acceleration: false
       </rosparam>
     </node>
 
     <rosparam ns="amcl">
-      update_min_a: 0.01 <!-- update filter every 0.01[m] translation -->
-      update_min_d: 0.01 <!-- update filter every 0.01[rad] rotation -->
+      update_min_a: 0.05 <!-- update filter every 0.05 [m] translation -->
+      update_min_d: 0.1  <!-- update filter every 0.1 [rad] rotation -->
       odom_alpha1: 0.2  # rotation noise per rotation
       odom_alpha2: 0.2  # rotation noise per translation
       odom_alpha3: 0.2  # translation noise per translation
       odom_alpha4: 0.2  # translation noise per rotation
+    </rosparam>
+
+    <rosparam ns="move_base">
+      controller_frequency: 10.0
     </rosparam>
 
     <rosparam ns="move_base">
