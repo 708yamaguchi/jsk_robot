@@ -9,6 +9,7 @@
   <arg name="cmd_vel_topic" default="/spot/cmd_vel" />
   <arg name="scan_topic"     default="base_scan" />
   <arg name="map_topic" default="map" />
+  <arg name="odom_topic" default="/spot/odom" />
 
   <!-- jsk_maps -->
   <include file="$(find jsk_maps)/launch/start_map_$(arg map_frame).launch">
@@ -32,5 +33,6 @@
     <rosparam file="$(find jsk_spot_startup)/config/navigation/move_base.yaml" command="load" />
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="map" to="$(arg map_topic)" />
+    <remap from="odom" to="$(arg odom_topic)" />
   </node>
 </launch>
