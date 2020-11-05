@@ -7,10 +7,8 @@
   <arg name="use_keepout" default="true" />
 
   <arg name="cmd_vel_topic" default="/spot/cmd_vel" />
-  <arg name="odom_topic" default="body" />
   <arg name="scan_topic"     default="base_scan" />
   <arg name="map_topic" default="map" />
-  <arg name="use_map_topic"  default="false" />
 
   <!-- jsk_maps -->
   <include file="$(find jsk_maps)/launch/start_map_$(arg map_frame).launch">
@@ -18,20 +16,11 @@
     <arg name="keepout" value="$(arg use_keepout)" />
   </include>
 
-  <!-- Depth image to laser scan -->
-  <include file="$(find jsk_spot_startup)/launch/depthimage_to_laserscan.launch" />
-
   <!-- localize the robot -->
   <node pkg="amcl" type="amcl" name="amcl">
     <remap from="scan" to="$(arg scan_topic)" />
     <remap from="map" to="$(arg map_topic)" />
-    <param name="use_map_topic"  value="$(arg use_map_topic)" />
     <rosparam file="$(find jsk_spot_startup)/config/navigation/amcl.yaml" command="load" />
-    <!-- <rosparam> -->
-    <!--   odom_frame_id: "body" -->
-    <!--   base_frame_id: "base_link" -->
-    <!--   global_frame_id: "map" -->
-    <!-- </rosparam> -->
   </node>
 
   <!-- planners, costmaps, etc -->
@@ -42,7 +31,6 @@
     <rosparam file="$(find jsk_spot_startup)/config/navigation/costmap_global.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find jsk_spot_startup)/config/navigation/move_base.yaml" command="load" />
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
-    <remap from="odom" to="$(arg odom_topic)"/>
     <remap from="map" to="$(arg map_topic)" />
   </node>
 </launch>
