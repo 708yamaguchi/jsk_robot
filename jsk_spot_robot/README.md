@@ -15,6 +15,6 @@ wstool update -t .
 source /opt/ros/$ROS_DISTRO/setup.bash
 rosdep install -y -r --from-paths . --ignore-src
 cd ../
-catkin build jsk_spot_startup
+catkin build spoteus jsk_spot_startup
 source devel/setup.bash
 ```

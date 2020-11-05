@@ -6,7 +6,7 @@
 
   <!-- Nodelet manager -->
   <node name="$(arg manager)" pkg="nodelet" type="nodelet" args="manager"
-        if="$(arg launch_manager)" respawn="true" output="screen" />
+        respawn="true" output="screen" />
 
   <!-- Depth image to pointcloud xyz -->
   <node pkg="nodelet" type="nodelet" name="depth_image_proc_frontleft"
@@ -62,7 +62,9 @@
   </node>
 
   <!-- Pointcloud xyz to laser scan -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_frontleft" >
+  <node pkg="nodelet" type="nodelet" name="pointcloud_to_laserscan"
+        args="load pointcloud_to_laserscan/laserscan_to_pointcloud_nodelet /$(arg manager)"
+        respawn="true" >
     <remap from="cloud_in" to="/spot/depth/points" />
     <remap from="scan" to="/base_scan" />
     <rosparam>
