@@ -1,7 +1,7 @@
 <launch>
   <arg name="username" default="dummyusername" />
   <arg name="password" default="dummypassword" />
-  <arg name="manager_name" default="nodelet_manager" />
+  <arg name="manager" default="camera_nodelet_manager" />
   <arg name="launch_move_base" default="true" />
   <arg name="rviz" default="true" />
 
@@ -12,7 +12,9 @@
   </include>
 
   <!-- Create pointcloud and laser scan from depth images -->
-  <include file="$(find jsk_spot_startup)/launch/spot_sensors.launch" />
+  <include file="$(find jsk_spot_startup)/launch/spot_sensors.launch" >
+    <arg name="manager" value="$(arg manager)" />
+  </include>
 
   <!-- Spot navigation with move_base-->
   <include if="$(arg launch_move_base)"

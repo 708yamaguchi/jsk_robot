@@ -21,6 +21,7 @@
   <node pkg="amcl" type="amcl" name="amcl">
     <remap from="scan" to="$(arg scan_topic)" />
     <remap from="map" to="$(arg map_topic)" />
+    <param name="use_map_topic" value="false" />
     <rosparam file="$(find jsk_spot_startup)/config/navigation/amcl.yaml" command="load" />
   </node>
 

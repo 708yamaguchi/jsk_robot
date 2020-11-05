@@ -17,7 +17,7 @@
   <run_depend>jsk_maps</run_depend>
   <run_depend>move_base</run_depend>
   <run_depend>pcl_ros</run_depend>
-  <run_depend>poitncloud_to_laserscan</run_depend>
+  <run_depend>pointcloud_to_laserscan</run_depend>
   <run_depend>spot_description</run_depend>
   <run_depend>spot_driver</run_depend>
 
