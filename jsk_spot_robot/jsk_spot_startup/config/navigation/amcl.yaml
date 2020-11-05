@@ -28,10 +28,10 @@ laser_sigma_hit: 0.2
 
 # Odometry model
 odom_model_type: "omni-corrected"
-odom_alpha1: 0.1  # rotation noise per rotation
-odom_alpha2: 0.05  # rotation noise per translation
-odom_alpha3: 0.05  # translation noise per translation
-odom_alpha4: 0.1  # translation noise per rotation
+odom_alpha1: 0.01  # rotation noise per rotation
+odom_alpha2: 0.005  # rotation noise per translation
+odom_alpha3: 0.005  # translation noise per translation
+odom_alpha4: 0.01  # translation noise per rotation
 odom_frame_id: "vision"
 base_frame_id: "body"
 global_frame_id: "map"
