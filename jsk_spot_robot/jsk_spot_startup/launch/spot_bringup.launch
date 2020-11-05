@@ -1,0 +1,21 @@
+<launch>
+  <arg name="username" default="dummyusername" />
+  <arg name="password" default="dummypassword" />
+  <arg name="launch_move_base" default="true" />
+  <arg name="rviz" default="true" />
+
+  <!-- Spot drivers for ROS -->
+  <include file="$(find spot_driver)/launch/driver.launch">
+    <arg name="username" value="$(arg username)" />
+    <arg name="password" value="$(arg password)" />
+  </include>
+
+  <!-- spot navigation with move_base-->
+  <include if="$(arg launch_move_base)"
+           file="$(find jsk_spot_startup)/launch/spot_nav.launch" />
+
+  <!-- Rviz -->
+  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find jsk_spot_startup)/config/jsk_startup.rviz" />
+
+</launch>

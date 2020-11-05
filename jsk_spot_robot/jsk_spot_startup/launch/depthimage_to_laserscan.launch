@@ -1,0 +1,90 @@
+<launch>
+  <!-- Should we merge 5 laser topics into 1 topic? -->
+  <!-- We should use nodelet manager -->
+  <!-- Should we create depthimage_to_pointcloud.launch> -->
+
+  <!-- Depth image to pointcloud xyz -->
+  <node pkg="nodelet" type="nodelet" name="depth_image_proc_frontleft"
+        args="standalone depth_image_proc/point_cloud_xyz"
+        respawn="true" >
+        <remap from="image_rect" to="/spot/depth/frontleft/image" />
+        <remap from="camera_info" to="/spot/depth/frontleft/camera_info" />
+        <remap from="points" to="/spot/depth/frontleft/points" />
+  </node>
+  <node pkg="nodelet" type="nodelet" name="depth_image_proc_frontright"
+        args="standalone depth_image_proc/point_cloud_xyz"
+        respawn="true" >
+        <remap from="image_rect" to="/spot/depth/frontright/image" />
+        <remap from="camera_info" to="/spot/depth/frontright/camera_info" />
+        <remap from="points" to="/spot/depth/frontright/points" />
+  </node>
+  <node pkg="nodelet" type="nodelet" name="depth_image_proc_left"
+        args="standalone depth_image_proc/point_cloud_xyz"
+        respawn="true" >
+        <remap from="image_rect" to="/spot/depth/left/image" />
+        <remap from="camera_info" to="/spot/depth/left/camera_info" />
+        <remap from="points" to="/spot/depth/left/points" />
+  </node>
+  <node pkg="nodelet" type="nodelet" name="depth_image_proc_right"
+        args="standalone depth_image_proc/point_cloud_xyz"
+        respawn="true" >
+        <remap from="image_rect" to="/spot/depth/right/image" />
+        <remap from="camera_info" to="/spot/depth/right/camera_info" />
+        <remap from="points" to="/spot/depth/right/points" />
+  </node>
+  <node pkg="nodelet" type="nodelet" name="depth_image_proc_back"
+        args="standalone depth_image_proc/point_cloud_xyz"
+        respawn="true" >
+        <remap from="image_rect" to="/spot/depth/back/image" />
+        <remap from="camera_info" to="/spot/depth/back/camera_info" />
+        <remap from="points" to="/spot/depth/back/points" />
+  </node>
+
+  <!-- Pointcloud xyz to base scan -->
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_frontleft" >
+    <remap from="cloud_in" to="/spot/depth/frontleft/points" />
+    <remap from="scan" to="/base_scan" />
+    <rosparam>
+      target_frame: body
+      min_height: -0.3
+      max_height: -0.2
+    </rosparam>
+  </node>
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_frontright" >
+    <remap from="cloud_in" to="/spot/depth/frontright/points" />
+    <remap from="scan" to="/base_scan" />
+    <rosparam>
+      target_frame: body
+      min_height: -0.3
+      max_height: -0.2
+    </rosparam>
+  </node>
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_left" >
+    <remap from="cloud_in" to="/spot/depth/left/points" />
+    <remap from="scan" to="/base_scan" />
+    <rosparam>
+      target_frame: body
+      min_height: -0.3
+      max_height: -0.2
+    </rosparam>
+  </node>
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_right" >
+    <remap from="cloud_in" to="/spot/depth/right/points" />
+    <remap from="scan" to="/base_scan" />
+    <rosparam>
+      target_frame: body
+      min_height: -0.3
+      max_height: -0.2
+    </rosparam>
+  </node>
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_back" >
+    <remap from="cloud_in" to="/spot/depth/back/points" />
+    <remap from="scan" to="/base_scan" />
+    <rosparam>
+      target_frame: body
+      min_height: -0.3
+      max_height: -0.2
+    </rosparam>
+  </node>
+
+</launch>
