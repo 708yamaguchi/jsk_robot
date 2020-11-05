@@ -79,6 +79,8 @@
       target_frame: $(arg target_frame)
       min_height: $(arg min_height)
       max_height: $(arg max_height)
+      angle_min: -3.14
+      angle_max: 3.14
     </rosparam>
   </node>
 </launch>

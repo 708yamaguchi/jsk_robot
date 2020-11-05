@@ -1,11 +1,11 @@
 # Filter
 min_particles: 500
-max_particles: 2000
+max_particles: 5000
 kld_err: 0.1
 kld_z: 0.5
 # minimum distance between particle updates
 update_min_d: 0.1
-update_min_a: 0.05
+update_min_a: 0.175
 # number of filter updates before resampling
 resample_interval: 1
 # disable filter recovery
@@ -22,17 +22,18 @@ laser_likelihood_max_dist: 4.0
 laser_max_beams: 30
 laser_min_range: -1.0
 laser_max_range: -1.0
-laser_z_hit: 0.95
-laser_z_rand: 0.05
-laser_sigma_hit: 0.2
+laser_z_hit: 0.9
+laser_z_rand: 0.5
+laser_sigma_hit: 0.1
 
 # Odometry model
 odom_model_type: "omni-corrected"
-odom_alpha1: 0.01  # rotation noise per rotation
-odom_alpha2: 0.005  # rotation noise per translation
-odom_alpha3: 0.005  # translation noise per translation
-odom_alpha4: 0.01  # translation noise per rotation
+odom_alpha1: 0.008  # rotation noise per rotation
+odom_alpha2: 0.04  # rotation noise per translation
+odom_alpha3: 0.008  # translation noise per translation
+odom_alpha4: 0.025  # translation noise per rotation
+odom_alpha5: 0.01
 odom_frame_id: "vision"
 base_frame_id: "body"
 global_frame_id: "map"
-transform_tolerance: 0.5
+transform_tolerance: 0.1

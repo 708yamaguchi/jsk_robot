@@ -349,26 +349,160 @@ Visualization Manager:
       Update Topic: /twist_marker_server/update
       Value: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
-      Marker Scale: 1
+        All Enabled: false
+        back:
+          Value: false
+        back_fisheye:
+          Value: false
+        base_link:
+          Value: false
+        body:
+          Value: false
+        eng2:
+          Value: false
+        eng2/1f:
+          Value: false
+        eng2/2f:
+          Value: false
+        eng2/3f:
+          Value: false
+        eng2/7f:
+          Value: false
+        eng2/7f/73B2:
+          Value: false
+        eng2/8f:
+          Value: false
+        front_left_hip:
+          Value: false
+        front_left_lower_leg:
+          Value: false
+        front_left_upper_leg:
+          Value: false
+        front_rail:
+          Value: false
+        front_right_hip:
+          Value: false
+        front_right_lower_leg:
+          Value: false
+        front_right_upper_leg:
+          Value: false
+        frontleft:
+          Value: false
+        frontleft_fisheye:
+          Value: false
+        frontright:
+          Value: false
+        frontright_fisheye:
+          Value: false
+        gpe:
+          Value: false
+        head:
+          Value: false
+        left:
+          Value: false
+        left_fisheye:
+          Value: false
+        map:
+          Value: false
+        odom:
+          Value: false
+        rear_left_hip:
+          Value: false
+        rear_left_lower_leg:
+          Value: false
+        rear_left_upper_leg:
+          Value: false
+        rear_rail:
+          Value: false
+        rear_right_hip:
+          Value: false
+        rear_right_lower_leg:
+          Value: false
+        rear_right_upper_leg:
+          Value: false
+        right:
+          Value: false
+        right_fisheye:
+          Value: false
+        vision:
+          Value: true
+        world:
+          Value: false
+      Marker Scale: 10
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        world:
+          eng2:
+            eng2/1f:
+              {}
+            eng2/2f:
+              {}
+            eng2/3f:
+              {}
+            eng2/7f:
+              eng2/7f/73B2:
+                {}
+              map:
+                vision:
+                  body:
+                    base_link:
+                      {}
+                    front_left_hip:
+                      front_left_upper_leg:
+                        front_left_lower_leg:
+                          {}
+                    front_rail:
+                      {}
+                    front_right_hip:
+                      front_right_upper_leg:
+                        front_right_lower_leg:
+                          {}
+                    head:
+                      back:
+                        back_fisheye:
+                          {}
+                      frontleft:
+                        frontleft_fisheye:
+                          {}
+                      frontright:
+                        frontright_fisheye:
+                          {}
+                      left:
+                        left_fisheye:
+                          {}
+                      right:
+                        right_fisheye:
+                          {}
+                    odom:
+                      gpe:
+                        {}
+                    rear_left_hip:
+                      rear_left_upper_leg:
+                        rear_left_lower_leg:
+                          {}
+                    rear_rail:
+                      {}
+                    rear_right_hip:
+                      rear_right_upper_leg:
+                        rear_right_lower_leg:
+                          {}
+            eng2/8f:
+              {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Class: rviz/Group
       Displays:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 2.476104736328125
-            Min Value: -0.5138491988182068
+            Max Value: 0.5917363166809082
+            Min Value: -14.020899772644043
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -397,8 +531,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 3.6690495014190674
-            Min Value: -0.6241129636764526
+            Max Value: 1.9791374206542969
+            Min Value: -14.253479957580566
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -427,8 +561,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 1.3133876323699951
-            Min Value: -0.6214917302131653
+            Max Value: 0.7368008494377136
+            Min Value: -5.121765613555908
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -457,8 +591,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 0.2567870020866394
-            Min Value: -0.4994518756866455
+            Max Value: 0.7869037985801697
+            Min Value: -0.5249890685081482
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -487,8 +621,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 1.4618816375732422
-            Min Value: -0.6405900120735168
+            Max Value: 1.282422661781311
+            Min Value: -7.695525646209717
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -514,7 +648,7 @@ Visualization Manager:
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
-      Enabled: true
+      Enabled: false
       Name: DepthPointClouds
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -560,22 +694,22 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: GlobalCostMap
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: true
+      Value: false
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: LocalCostMap
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -604,7 +738,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 18.582304000854492
+      Distance: 23.93083381652832
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -619,10 +753,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.0153985023498535
+      Pitch: 1.0003985166549683
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.6573454141616821
+      Yaw: 0.47234559059143066
     Saved: ~
 Window Geometry:
   Displays:
