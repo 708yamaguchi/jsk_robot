@@ -1,11 +1,11 @@
 # Filter
-min_particles: 500
-max_particles: 5000
+min_particles: 1000
+max_particles: 10000
 kld_err: 0.1
 kld_z: 0.5
 # minimum distance between particle updates
 update_min_d: 0.1
-update_min_a: 0.175
+update_min_a: 0.1
 # number of filter updates before resampling
 resample_interval: 1
 # disable filter recovery
@@ -18,22 +18,36 @@ save_pose_rate: 0.5
 
 # Laser model
 laser_model_type: "likelihood_field"
-laser_likelihood_max_dist: 4.0
-laser_max_beams: 30
+laser_likelihood_max_dist: 3.0
 laser_min_range: -1.0
 laser_max_range: -1.0
-laser_z_hit: 0.9
-laser_z_rand: 0.5
-laser_sigma_hit: 0.1
+laser_max_beams: 30
+laser_z_hit: 0.5
+laser_z_short: 0.1
+laser_z_max: 0.05
+laser_z_rand: 0.1
+laser_sigma_hit: 0.2
 
 # Odometry model
 odom_model_type: "omni-corrected"
-odom_alpha1: 0.008  # rotation noise per rotation
-odom_alpha2: 0.04  # rotation noise per translation
-odom_alpha3: 0.008  # translation noise per translation
-odom_alpha4: 0.025  # translation noise per rotation
-odom_alpha5: 0.01
-odom_frame_id: "vision"
+# # Add translation noise for corrider,
+# # As laser, we use depth camera, which does not have long sensing range
+# odom_alpha1: 0.2  # rotation noise per rotation
+# odom_alpha2: 0.2  # rotation noise per translation
+# odom_alpha3: 0.6  # translation noise per translation
+# odom_alpha4: 0.2  # translation noise per rotation
+# odom_alpha5: 0.6
+
+# If we use odom without vision, we can set small odom_alpha
+# As laser, we use depth camera, which does not have long sensing range
+odom_alpha1: 0.05  # rotation noise per rotation
+odom_alpha2: 0.05 # rotation noise per translation
+odom_alpha3: 0.2  # translation noise per translation
+odom_alpha4: 0.05  # translation noise per rotation
+odom_alpha5: 0.2
+
+# odom_frame_id: "vision"
+odom_frame_id: "odom"
 base_frame_id: "body"
 global_frame_id: "map"
 transform_tolerance: 0.1

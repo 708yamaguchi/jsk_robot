@@ -26,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: FrontLeftDepthCloud
+    SyncSource: LaserScan
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -501,8 +501,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 0.5917363166809082
-            Min Value: -14.020899772644043
+            Max Value: 1.3335598707199097
+            Min Value: -11.614346504211426
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -531,8 +531,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 1.9791374206542969
-            Min Value: -14.253479957580566
+            Max Value: 2.9536545276641846
+            Min Value: -11.729248046875
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -561,8 +561,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 0.7368008494377136
-            Min Value: -5.121765613555908
+            Max Value: 0.6748233437538147
+            Min Value: -3.614776134490967
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -591,8 +591,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 0.7869037985801697
-            Min Value: -0.5249890685081482
+            Max Value: 0.39206981658935547
+            Min Value: -4.305237770080566
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -621,8 +621,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 1.282422661781311
-            Min Value: -7.695525646209717
+            Max Value: 0.8643359541893005
+            Min Value: -4.14064884185791
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -686,7 +686,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: true
       Name: Map
-      Topic: /map
+      Topic: /map_keepout
       Unreliable: false
       Use Timestamp: false
       Value: true
@@ -710,6 +710,22 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: false
+    - Alpha: 1
+      Arrow Length: 0.30000001192092896
+      Axes Length: 0.30000001192092896
+      Axes Radius: 0.009999999776482582
+      Class: rviz/PoseArray
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.07000000029802322
+      Head Radius: 0.029999999329447746
+      Name: ParticleCloud
+      Shaft Length: 0.23000000417232513
+      Shaft Radius: 0.009999999776482582
+      Shape: Arrow (Flat)
+      Topic: /particlecloud
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -738,22 +754,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 23.93083381652832
+      Distance: 33.62110137939453
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 2.722360849380493
-        Y: 4.892704486846924
-        Z: -3.733086585998535
+        X: 0.26422831416130066
+        Y: -1.0530105829238892
+        Z: -0.5933510065078735
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.0003985166549683
+      Pitch: 1.0153985023498535
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
       Yaw: 0.47234559059143066

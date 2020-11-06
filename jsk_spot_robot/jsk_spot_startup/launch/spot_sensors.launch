@@ -66,13 +66,13 @@
   </node>
 
   <!-- Pointcloud xyz to laser scan -->
+  <node pkg="nodelet" type="nodelet" name="pointcloud_to_laserscan"
+        args="load pointcloud_to_laserscan/pointcloud_to_laserscan_nodelet /$(arg manager)"
+        respawn="true" >
   <!-- <node pkg="nodelet" type="nodelet" name="pointcloud_to_laserscan" -->
-  <!--       args="load pointcloud_to_laserscan/laserscan_to_pointcloud_nodelet /$(arg manager)" -->
+  <!--       args="standalone pointcloud_to_laserscan/pointcloud_to_laserscan_nodelet" -->
   <!--       respawn="true" > -->
-  <!-- <node pkg="nodelet" type="nodelet" name="pointcloud_to_laserscan" -->
-  <!--       args="standalone pointcloud_to_laserscan/laserscan_to_pointcloud_nodelet" -->
-  <!--       respawn="true" > -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_node">
+  <!-- <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan_node"> -->
     <remap from="cloud_in" to="/spot/depth/points" />
     <remap from="scan" to="/base_scan" />
     <rosparam subst_value="true">
