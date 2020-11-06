@@ -11,6 +11,7 @@
     <param name="username" value="$(arg username)" />
     <param name="password" value="$(arg password)" />
     <param name="hostname" value="$(arg hostname)" />
+    <param name="mode_parent_odom_tf" value="odom" />
     <remap from="joint_states" to="/joint_states"/>
     <remap from="tf" to="/tf"/>
   </node>
