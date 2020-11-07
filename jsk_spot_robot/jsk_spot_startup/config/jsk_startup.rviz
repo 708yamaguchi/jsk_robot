@@ -406,9 +406,9 @@ Visualization Manager:
         left_fisheye:
           Value: false
         map:
-          Value: false
+          Value: true
         odom:
-          Value: false
+          Value: true
         rear_left_hip:
           Value: false
         rear_left_lower_leg:
@@ -428,7 +428,7 @@ Visualization Manager:
         right_fisheye:
           Value: false
         vision:
-          Value: true
+          Value: false
         world:
           Value: false
       Marker Scale: 10
@@ -809,16 +809,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 10
+      Distance: 19.043378829956055
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -1.4831159114837646
+        Y: 3.61206316947937
+        Z: -1.5053939819335938
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false

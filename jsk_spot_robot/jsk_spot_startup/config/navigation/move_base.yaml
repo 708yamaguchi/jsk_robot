@@ -59,16 +59,25 @@ TrajectoryPlannerROS:
   # min_vel_x: 0.15
   # max_vel_y: 0.0
   # min_vel_y: 0.0
-  max_vel_x: 0.1
-  min_vel_x: 0.05
-  max_vel_y: 0.1
-  min_vel_y: 0.05
+  max_vel_x: 0.5
+  min_vel_x: 0.0
+  max_vel_y: 0.3
+  min_vel_y: 0.0
   # max_vel_theta: 1.5
   # min_vel_theta: -1.5
-  max_vel_theta: 0.3
-  min_vel_theta: -0.3
+  max_vel_theta: 0.7
+  min_vel_theta: -0.7
   min_in_place_vel_theta: 0.3
   holonomic_robot: true
+
+  # min_in_place_vel_theta: 1.0
+  # escape_vel: -0.1 # -0.1
+  # vx_samples: 10
+  # meter_scoring: true
+  pdist_scale: 5.0
+  gdist_scale: 3.2
+  occdist_scale: 0.1
+  # dwa: true
 
 # Recovery behaviors
 recovery_behavior_enabled: true
