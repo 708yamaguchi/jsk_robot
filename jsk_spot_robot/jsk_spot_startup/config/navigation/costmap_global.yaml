@@ -6,7 +6,7 @@ static_map: true
 
 plugins:
  - {name: static_map, type: "costmap_2d::StaticLayer"}
- - {name: obstacles,  type: "costmap_2d::FetchDepthLayer"}
+ - {name: obstacles,  type: "costmap_2d::ObstacleLayer"}
  - {name: inflater,   type: "costmap_2d::InflationLayer"}
 
 footprint: [[-0.55, -0.25], [-0.55, 0.25], [0.55, 0.25], [0.55, -0.25]]
