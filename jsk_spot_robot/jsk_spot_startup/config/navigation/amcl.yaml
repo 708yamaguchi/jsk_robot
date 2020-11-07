@@ -32,14 +32,15 @@ laser_sigma_hit: 0.2
 odom_model_type: "omni-corrected"
 # We use spot's odom without vision
 # Odom with vision is weak in simple scenes such as corridors.
-odom_alpha1: 0.05  # rotation noise per rotation
-odom_alpha2: 0.05 # rotation noise per translation
-odom_alpha3: 0.2  # translation noise per translation
-odom_alpha4: 0.05  # translation noise per rotation
-odom_alpha5: 0.2
+odom_alpha1: 0.025  # rotation noise per rotation
+odom_alpha2: 0.025 # rotation noise per translation
+odom_alpha3: 0.05  # translation noise per translation
+odom_alpha4: 0.025  # translation noise per rotation
+odom_alpha5: 0.05
 
 # odom_frame_id: "vision"
 odom_frame_id: "odom"
 base_frame_id: "body"
 global_frame_id: "map"
-transform_tolerance: 0.1
+# transform_tolerance: 0.1
+transform_tolerance: 0.5
