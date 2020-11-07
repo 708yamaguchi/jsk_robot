@@ -5,7 +5,7 @@ transform_tolerance: 1.0 # default: 0.5
 
 # robot_radius: 0.30
 inflater:
-  inflation_radius: 0.50
+  inflation_radius: 0.20
 
 obstacles:
   observation_sources: base_scan
