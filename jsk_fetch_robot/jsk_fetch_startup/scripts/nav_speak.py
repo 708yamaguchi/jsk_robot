@@ -4,6 +4,7 @@
 import rospy
 import time
 
+from std_msgs.msg import Empty
 from sound_play.libsoundplay import SoundClient
 from sound_play.msg import SoundRequestAction
 from sound_play.msg import SoundRequestGoal
@@ -29,18 +30,27 @@ class NavSpeak:
         self.move_base_goal_sub = rospy.Subscriber("/move_base/goal", MoveBaseActionGoal, self.move_base_goal_callback, queue_size = 1)
         self.move_base_result_sub = rospy.Subscriber("/move_base/result", MoveBaseActionResult, self.move_base_result_callback, queue_size = 1)
         self.robotsound_jp_status_sub = rospy.Subscriber("/robotsound_jp/status", GoalStatusArray, self.robotsound_jp_status_callback, queue_size = 1)
+        self.stop_speaking_sub = rospy.Subscriber("~stop_speaking", Empty, self.stop_speaking_callback, queue_size = 1)
         self.sound = SoundClient()
         self.lang = "japanese"  # speak japanese by default
-        if rospy.has_param("/nav_speak/lang"):
-            self.lang = rospy.get_param("/nav_speak/lang")
+        if rospy.has_param("~lang"):
+            self.lang = rospy.get_param("~lang")
+        self.stop_speaking_duration = 10
+        if rospy.has_param("~stop_speaking_duration"):
+            self.stop_speaking_duration = rospy.get_param("~stop_speaking_duration")
         self.client = actionlib.SimpleActionClient('robotsound_jp', SoundRequestAction)
         self.client.wait_for_server()
         self.is_speaking = False
+        self.stop_speaking = False
 
     def move_base_goal_callback(self, msg):
+        if self.stop_speaking is True:
+            return
         self.sound.play(2)
 
     def move_base_result_callback(self, msg):
+        if self.stop_speaking is True:
+            return
         # Wait if other node is speaking
         while self.is_speaking is True:
             time.sleep(1)
@@ -87,13 +97,14 @@ class NavSpeak:
         else:
             self.is_speaking = True
 
+    def stop_speaking_callback(self, msg):
+        self.stop_speaking = True
+        time.sleep(self.stop_speaking_duration)
+        self.stop_speaking = False
+
+
 if __name__ == "__main__":
     global sound
     rospy.init_node("nav_speak")
     n = NavSpeak()
     rospy.spin()
-
-
-
-
-
