@@ -4,6 +4,7 @@
   <arg name="uptime_enable" default="true"/>
   <arg name="tablet_enable" default="true"/>
   <arg name="warning_enable" default="true"/>
+  <arg name="move_enable" default="true"/>
 
   <arg name="motor_subscribe" default="true"/>
   <arg name="odom_subscribe" default="true"/>
@@ -74,6 +75,11 @@
   </node>
   <node if="$(arg warning_enable)" name="tweet_client_warning" pkg="roseus"
         type="roseus" args="$(find jsk_robot_startup)/lifelog/tweet_client_warning.l"
+        machine="$(arg machine)"
+        output="$(arg output)" respawn="true" >
+  </node>
+  <node if="$(arg move_enable)" name="tweet_client_warning" pkg="roseus"
+        type="roseus" args="$(find jsk_robot_startup)/lifelog/tweet_client_move.l"
         machine="$(arg machine)"
         output="$(arg output)" respawn="true" >
   </node>
