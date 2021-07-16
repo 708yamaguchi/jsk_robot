@@ -45,9 +45,6 @@
       volume: 0.5
     </rosparam>
   </node>
-  <node if="$(arg boot_sound)" pkg="jsk_robot_startup" name="boot_sound" type="boot_sound.py" >
-    <param name="wav_file" value="$(find jsk_fetch_startup)/data/boot_sound.wav" />
-  </node>
 
   <!-- look at human for Fetch -->
   <node name="look_at_human"
@@ -62,7 +59,12 @@
   <!-- disable sound_play in julius.launch and place it in fetch_bringup.launch -->
   <!-- see: https://github.com/jsk-ros-pkg/jsk_robot/pull/1140 -->
   <node name="sound_play" pkg="sound_play" type="soundplay_node.py"
-        respawn="true" if="$(arg launch_sound_play)" />
+        output="screen" respawn="true" if="$(arg launch_sound_play)" />
+
+  <node if="$(arg boot_sound)" pkg="jsk_robot_startup" name="boot_sound" type="boot_sound.py" >
+    <param name="wav_file" value="$(find jsk_fetch_startup)/data/boot_sound.wav" />
+  </node>
+
 
   <!-- japanese speech node -->
   <include if="$(arg use_voice_text)" file="$(find voice_text)/launch/voice_text.launch">

@@ -73,8 +73,8 @@
     version: 0.5.5
 - git:
     local-name: ros-drivers/audio_common
-    uri: https://github.com/ros-drivers/audio_common.git
-    version: master
+    uri: https://github.com/knorth55/audio_common.git
+    version: fetch15
 - git:
     local-name: ros-perception/slam_gmapping
     uri: https://github.com/ros-perception/slam_gmapping.git

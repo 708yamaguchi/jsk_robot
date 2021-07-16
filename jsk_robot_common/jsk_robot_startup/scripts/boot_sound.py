@@ -10,7 +10,6 @@ import rospkg
 
 from sound_play.libsoundplay import SoundClient
 import actionlib
-from sound_play.msg import SoundRequestAction
 
 if __name__ == "__main__":
     rospy.init_node("boot_sound")
@@ -19,11 +18,8 @@ if __name__ == "__main__":
     else:
         wav_file = "/usr/share/sounds/alsa/Front_Center.wav"
 
-    sound = SoundClient()
-    time.sleep(1) # ???
-    ac = actionlib.SimpleActionClient('sound_play', SoundRequestAction)
-    ac.wait_for_server()
-
+    sound = SoundClient(sound_action='sound_play', blocking=True)
+    sound.actionclient.wait_for_server()
 
     interfaces = filter(lambda x: x[0:3] in ['eth', 'enp', 'wla', 'wlp'] and
                         ni.ifaddresses(x).has_key(2),  # 2 means IPv4? ???
@@ -36,16 +32,11 @@ if __name__ == "__main__":
     # play sound
     rospy.loginfo("Playing {}".format(wav_file))
     sound.playWave(wav_file)
-    time.sleep(10) # make sure to topic is going out
+    # time.sleep(10) # make sure to topic is going out
 
     # notify ip address
     ip_text = "My internet address is {}".format(ip)
     rospy.loginfo(ip_text)
     ip_text = ip_text.replace('.', ', ')
     sound.say(ip_text)
-    time.sleep(1) # make sure to topic is going out
-
-
-
-
-
+    # time.sleep(1) # make sure to topic is going out
