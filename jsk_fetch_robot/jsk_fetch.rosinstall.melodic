@@ -71,10 +71,16 @@
     local-name: mikeferguson/robot_calibration
     uri: https://github.com/mikeferguson/robot_calibration.git
     version: 0.5.5
+# To use https://github.com/knorth55/audio_common/commit/0afc838d44e5e99d11de78f2315d5534ea732d18
+# Use ros-drivers master branch after https://github.com/ros-drivers/audio_common/pull/173 is merged.
 - git:
     local-name: ros-drivers/audio_common
-    uri: https://github.com/ros-drivers/audio_common.git
-    version: master
+    uri: https://github.com/knorth55/audio_common.git
+    version: fetch15
+# - git:
+#     local-name: ros-drivers/audio_common
+#     uri: https://github.com/ros-drivers/audio_common.git
+#     version: master
 - git:
     local-name: ros-perception/slam_gmapping
     uri: https://github.com/ros-perception/slam_gmapping.git
