@@ -15,10 +15,17 @@ if __name__ == "__main__":
     else:
         wav_file = "/usr/share/sounds/alsa/Front_Center.wav"
 
+    preferred_interface = rospy.get_param("~preferred_interface", 'eth')
+
     sound = SoundClient(sound_action='sound_play', blocking=True)
     sound.actionclient.wait_for_server()
 
-    interfaces = [x for x in ni.interfaces() if x[0:3] in ['eth', 'enp', 'wla', 'wlp'] and
+    interfaces = ['eth', 'enp', 'wla', 'wlp']
+    if preferred_interface in interfaces:
+        interfaces.remove(preferred_interface)
+    interfaces.insert(0, preferred_interface)
+
+    interfaces = [x for x in ni.interfaces() if x[0:3] in interfaces and
                   2 in ni.ifaddresses(x).keys()]
     if len(interfaces) > 0:
         ip = ni.ifaddresses(interfaces[0])[2][0]['addr']
