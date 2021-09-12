@@ -5,6 +5,7 @@
   <arg name="launch_ntp_monitor" default="true"/>
   <arg name="launch_wifi_ddwrt" default="false" />
   <arg name="launch_network_detector" default="true" />
+  <arg name="launch_sound_play" default="true"/>
   <arg name="launch_network_status" default="true" />
   <arg name="launch_sound_play" default="true"/>
   <arg name="launch_audio_play" default="true"/>
