@@ -23,17 +23,26 @@ class Shutdown(object):
     """
 
     def __init__(self):
+        rospy.loginfo('Start shutdown node.')
         rospy.Service('shutdown', Empty, self.shutdown)
         rospy.Service('reboot', Empty, self.reboot)
 
     def shutdown(self, req):
         rospy.loginfo('Shut down robot.')
-        os.system('/sbin/shutdown -h now')
+        shutdown_command = '/sbin/shutdown -h now'
+        ret = os.system(shutdown_command)
+        if ret != 0:
+            rospy.logerr("Failed to call '$ {}'. Check authentication.".format(
+                shutdown_command))
         return EmptyResponse()
 
     def reboot(self, req):
         rospy.loginfo('Reboot robot.')
-        os.system('/sbin/shutdown -r now')
+        reboot_command = '/sbin/shutdown -r now'
+        ret = os.system(reboot_command)
+        if ret != 0:
+            rospy.logerr("Failed to call '$ {}'. Check authentication.".format(
+                reboot_command))
         return EmptyResponse()
 
 
