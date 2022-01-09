@@ -1,11 +1,9 @@
 (require :spotkinova "package://spotkinovaeus/spotkinova.l")
 
-;; Reference https://github.com/jsk-ros-pkg/jsk_robot/pull/1263
 (unless (assoc :init-orig (send spot_gen3_lite_gen3_lite_2f-robot :methods))
   (rplaca (assoc :init (send spot_gen3_lite_gen3_lite_2f-robot :methods)) :init-orig))
 
 (defmethod spot_gen3_lite_gen3_lite_2f-robot
-  ;; Reference https://github.com/jsk-ros-pkg/jsk_robot/pull/1263
   (:init
    (&rest args) ;; fix colors
    (dolist (b (list :_make_instance_body_geom0
@@ -30,13 +28,6 @@
              (cdr (subst '(list :diffuse #f(0.1 0.1 0.1 1.0))
                          '(list :diffuse (float-vector 1.0 1.0 1.0 1.0))
                          (assoc b (send  (class self) :methods)))))
-     )
-   (dolist (b (list :_make_instance_kinova_right_finger_dist_link_geom0
-                    :_make_instance_kinova_left_finger_dist_link_geom0))
-     (rplacd (assoc b (send (class self) :methods))
-             (cdr (subst '(list :diffuse #f(0.1 0.2 0.9 1.0))
-                         '(list :diffuse (float-vector 1.0 1.0 1.0 1.0))
-                         (assoc b (send (class self) :methods)))))
      )
       (send* self :init-orig args))
   (:legs ;; support legs for all limbs
