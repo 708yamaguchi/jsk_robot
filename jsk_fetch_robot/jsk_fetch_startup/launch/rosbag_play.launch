@@ -63,24 +63,46 @@
 
   <!-- decompress L515 -->
   <arg name="L515_RGB_IMAGE" value="/l515_head/color/image_raw" />
-  <arg name="L515_DEPTH_IMAGE" value="/l515_head/depth/image_rect_raw" />
   <arg name="L515_RGB_CAMERA_INFO" value="/l515_head/color/camera_info" />
+  <arg name="L515_QUAT_RGB_IMAGE" value="/l515_head/color/quater/image_raw" />
+  <arg name="L515_QUAT_RGB_CAMERA_INFO" value="/l515_head/color/quater/camera_info" />
+  <arg name="L515_DEPTH_IMAGE" value="/l515_head/aligned_depth_to_color/image_raw" />
   <group ns="l515">
     <node name="rgb_decompress" pkg="image_transport" type="republish"
           args="compressed in:=$(arg L515_RGB_IMAGE) raw out:=$(arg L515_RGB_IMAGE)" />
     <node name="depth_decompress" pkg="image_transport" type="republish"
           args="compressedDepth in:=$(arg L515_DEPTH_IMAGE) raw out:=$(arg L515_DEPTH_IMAGE)" />
     <node pkg="nodelet" type="nodelet" name="point_cloud_xyzrgb"
-          args="load depth_image_proc/point_cloud_xyzrgb $(arg manager)" output="screen" >
+          args="standalone depth_image_proc/point_cloud_xyzrgb" output="screen" >
       <remap from="rgb/camera_info" to="$(arg L515_RGB_CAMERA_INFO)" />
       <remap from="rgb/image_rect_color" to="$(arg L515_RGB_IMAGE)" />
       <remap from="depth_registered/image_rect" to="$(arg L515_DEPTH_IMAGE)" />
       <remap from="depth_registered/points" to="/l515_head/depth/color/points" />
       <rosparam>
-        queue_size: 100
-      </rosparam>
+      queue_size: 100
+    </rosparam>
     </node>
-  </group>
+      <node name="resize_rgb" pkg="nodelet" type="nodelet"
+            args="standalone image_proc/resize" output="screen">
+        <remap from="image" to="$(arg L515_RGB_IMAGE)" />
+        <remap from="camera_info" to="$(arg L515_RGB_CAMERA_INFO)" />
+        <remap from="~image" to="$(arg L515_QUAT_RGB_IMAGE)" />
+        <remap from="~camera_info" to="$(arg L515_QUAT_RGB_CAMERA_INFO)" />
+        <rosparam>
+          scale_width: 0.25
+          scale_height: 0.25
+        </rosparam>
+      </node>
+      <node name="resize_cloud" pkg="nodelet" type="nodelet"
+            args="standalone jsk_pcl/ResizePointsPublisher" output="screen">
+        <remap from="~input" to="/l515_head/depth/color/points" />
+        <remap from="~output" to="/l515_head/depth/color/quater/points" />
+        <rosparam>
+        step_x: 4
+        step_y: 4
+      </rosparam>
+      </node>
+      </group>
 
   <!-- relay -->
   <node name="rgb_image_relay" pkg="topic_tools" type="relay"
