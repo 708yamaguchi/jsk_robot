@@ -1,0 +1,22 @@
+<launch>
+  <node name="resize_cloud" pkg="jsk_pcl_ros" type="resize_points_publisher" output="screen">
+    <remap from="~input" to="/l515_head/depth/color/points" />
+    <remap from="~output" to="/l515_head/depth/color/quater/points" />
+    <rosparam>
+      step_x: 4
+      step_y: 4
+    </rosparam>
+  </node>
+
+  <!-- Color recognition for charged module with quater points -->
+  <include file="$(find jsk_pcl_ros)/launch/hsi_color_filter.launch">
+    <arg name="INPUT" value="points" />
+    <arg name="DEFAULT_NAMESPACE" value="/l515_head/depth/color/quater" />
+    <arg name="h_max" default="111" />
+    <arg name="h_min" default="75" />
+    <arg name="s_max" default="240" />
+    <arg name="s_min" default="50" />
+    <arg name="i_max" default="240" />
+    <arg name="i_min" default="70" />
+  </include>
+</launch>
