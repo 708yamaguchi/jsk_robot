@@ -424,6 +424,28 @@
     (send *ri* :go-pos-unsafe 0 0 -80) ;; face the front against the trash can
     success-move-to-trashcan-front))
 
+(defun find-sensor-module ()
+  (let (msg (n-trial 10))
+    ;; Subscribe HSI boxes
+    (dotimes (i n-trial)
+      (setq msg (one-shot-subscribe "/l515_head/depth/color/quater/boxes"
+                                    jsk_recognition_msgs::BoundingBoxArray
+                                    :timeout 1000))
+      (unless msg
+        (return-from find-sensor-module nil))
+      (if (eq 0 (length (send msg :boxes)))
+        (unix:usleep (* 500 1000))
+        (return))
+      (when (eq i (- n-trial 1))
+        (return-from take-sensor-module nil)))
+    ;; Transform sensor module coords
+    (let* ((frame-to-module (send (car (send msg :boxes)) :pose))
+           (frame-id (send msg :header :frame_id))
+           (lret (send *tfl* :wait-for-transform "base_link" frame-id (ros::time 0) 5))
+           (base-to-frame (send *tfl* :lookup-transform "base_link" frame-id (ros::time 0)))
+           (base-to-module (send base-to-frame :transform (ros::tf-pose->coords frame-to-module))))
+      base-to-module)))
+
 
 (defun go-to-kitchen (&key (tweet t) (n-dock-trial 1) (n-kitchen-trial 1)
                            (control-switchbot :api))
