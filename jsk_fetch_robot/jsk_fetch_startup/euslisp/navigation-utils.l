@@ -446,6 +446,57 @@
            (base-to-module (send base-to-frame :transform (ros::tf-pose->coords frame-to-module))))
       base-to-module)))
 
+(defun move-sensor-module (&key (charge nil))
+  ;; if :charge t, fetch moves the sensor module to the charger
+  ;; if :charge nil, fetch takes the sensor module from the charger
+  (send *fetch* :angle-vector #f(360.0 75.6304 80.2141 -11.4592 98.5487 0.0 95.111 0.0 58 56))
+  (send *ri* :angle-vector (send *fetch* :angle-vector) 2000)
+  (send *ri* :wait-interpolation)
+  ;; At the beginning of the demo, fetch recognizes charged module and takes it.
+  ;; At the end of the demo, fetch returns the module to the recognized place.
+  (unless (boundp '*module-coords*)
+    (let ((module-coords (find-sensor-module))
+          (module-coords-corrected (make-coords :rpy (float-vector pi/2 0 0))))
+      (unless module-coords
+        (return-from move-sensor-module nil))
+      (send module-coords-corrected :locate (send module-coords :worldpos) :world)
+      (defparameter *module-coords* (send module-coords-corrected :copy-worldcoords)))
+    )
+  (let ((inter-avs
+         (list #f(360.0 75.6304 80.2141 -11.4592 98.5487 0.0 95.111 0.0 58 56)
+               #f(360 -5.42997 80.4294 -164.236 82.3799 2.74303 98.2338 0.27869 58 56)
+               #f(360.0 -31.9149 51.8371 129.014 121.999 -87.744 100.973 -27.4544 58.0 56.0)))
+        (inter-tms (list 2000 4000 4000))
+        module-coords inter-av goal-av)
+    (send *fetch* :angle-vector (car (last inter-avs)))
+    (setq inter-av (send *fetch* :inverse-kinematics
+                        (send (send *module-coords* :copy-worldcoords)
+                              :translate #f(0 -50 100) :world)
+                        :rotation-axis :y :use-torso nil))
+    (setq inter-avs (append inter-avs (list inter-av)))
+    (setq inter-tms (append inter-tms (list 2000)))
+    ;; Reach hand to the charging station
+    (setq goal-av (send *fetch* :inverse-kinematics
+                        (send (send *module-coords* :copy-worldcoords)
+                              :translate #f(0 -10 40) :world)
+                        :rotation-axis :y :use-torso nil))
+    (when (null charge)
+      (send *ri* :stop-grasp :wait t))
+    (send *ri* :angle-vector-sequence
+          (append inter-avs (list goal-av))
+          (append inter-tms (list 2000)))
+    (send *ri* :wait-interpolation :arm-controller)
+    ;; TODO: Scan over the wireless charging station until the module is charged
+    (if charge
+      (send *ri* :stop-grasp :wait t)
+      (send *ri* :start-grasp :wait t))
+    ;; Withdraw hand from the charging station
+    (setq goal-av (send *fetch* :reset-pose))
+    (send *ri* :angle-vector-sequence
+          (append (reverse inter-avs) (list goal-av))
+          (append (reverse inter-tms) (list 2000)))
+    (send *ri* :wait-interpolation :arm-controller)
+    ))
 
 (defun go-to-kitchen (&key (tweet t) (n-dock-trial 1) (n-kitchen-trial 1)
                            (control-switchbot :api))
