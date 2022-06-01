@@ -158,13 +158,12 @@ plugin_order:
     - move_base_cancel_plugin
     - service_notification_saver_plugin
     - smach_notification_saver_plugin
+    - respeaker_audio_recorder_plugin
+    - rosbag_recorder_plugin
     - head_camera_converter_plugin
     - object_detection_converter_plugin
     - panorama_converter_plugin
     - rviz_converter_plugin
-    - respeaker_audio_recorder_plugin
-    - rosbag_recorder_plugin
-    - rosbag_video_converter_plugin
     - result_recorder_plugin
     - gdrive_uploader_plugin
     - tweet_notifier_plugin
@@ -175,13 +174,12 @@ plugin_order:
     - move_base_cancel_plugin
     - service_notification_saver_plugin
     - smach_notification_saver_plugin
+    - respeaker_audio_recorder_plugin
+    - rosbag_recorder_plugin
     - head_camera_converter_plugin
     - object_detection_converter_plugin
     - panorama_converter_plugin
     - rviz_converter_plugin
-    - respeaker_audio_recorder_plugin
-    - rosbag_recorder_plugin
-    - rosbag_video_converter_plugin
     - result_recorder_plugin
     - gdrive_uploader_plugin
     - tweet_notifier_plugin
