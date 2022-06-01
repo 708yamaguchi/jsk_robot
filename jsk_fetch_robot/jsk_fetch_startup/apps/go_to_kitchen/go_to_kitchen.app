@@ -95,6 +95,14 @@ plugins:
         - /server_name/smach/container_structure
         - /audio
         - /dual_fisheye_to_panorama/quater/output
+  - name: rosbag_video_converter_plugin
+    type: app_recorder/rosbag_video_converter_plugin
+    plugin_args:
+      rosbag_path: /tmp
+      rosbag_title: go_to_kitchen_rosbag.bag
+      image_topic_name: /head_camera/rgb/throttled/image_rect_color/compressed
+      image_fps: 5
+      video_path: /tmp/test
   - name: result_recorder_plugin
     type: app_recorder/result_recorder_plugin
     plugin_args:
@@ -168,6 +176,7 @@ plugin_order:
     - rviz_video_recorder_plugin
     - respeaker_audio_recorder_plugin
     - rosbag_recorder_plugin
+    - rosbag_video_converter_plugin
     - result_recorder_plugin
     - gdrive_uploader_plugin
     - tweet_notifier_plugin
@@ -184,6 +193,7 @@ plugin_order:
     - rviz_video_recorder_plugin
     - respeaker_audio_recorder_plugin
     - rosbag_recorder_plugin
+    - rosbag_video_converter_plugin
     - result_recorder_plugin
     - gdrive_uploader_plugin
     - tweet_notifier_plugin
