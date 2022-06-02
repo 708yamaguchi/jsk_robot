@@ -394,7 +394,7 @@
       (notify-recognition :location "kitchen"))))
 
 
-(defun move-to-sink-front (&key (n-trial 1) (offset #f(400 -500 0)))
+(defun move-to-sink-front (&key (n-trial 1) (offset #f(200 -500 0)))
   (let ((success-move-to-sink-front nil))
     (dotimes (i n-trial)
       (setq success-move-to-sink-front
@@ -426,7 +426,7 @@
     (progn
       (notify-recognition :location "trash cans"))))
 
-(defun move-to-trashcan-front (&key (n-trial 1) (offset #f(400 -500 0)))
+(defun move-to-trashcan-front (&key (n-trial 1) (offset #f(200 -500 0)))
   (let ((success-move-to-trashcan-front nil))
     (dotimes (i n-trial)
       (setq success-move-to-trashcan-front

@@ -53,6 +53,41 @@ plugins:
         - /server_name/smach/container_status
         - /server_name/smach/container_structure
         - /audio
+  # - name: rosbag_recorder_plugin
+  #   type: app_recorder/rosbag_recorder_plugin
+  #   launch_args:
+  #     rosbag_path: /tmp
+  #     rosbag_title: go_to_kitchen_rosbag.bag
+  #     compress: true
+  #     rosbag_topic_names:
+  #       - /rosout
+  #       - /tf
+  #       - /tf_static
+  #       - /joint_states
+  #       - /map
+  #       - /odom
+  #       - /odom_combined
+  #       - /cmd_vel
+  #       - /move_base/navigation_plan_viz
+  #       - /move_base/global_plan_viz
+  #       - /move_base/local_plan_viz
+  #       - /move_base/global_costmap/footprint
+  #       - /spots_marker_array
+  #       - /spots_pictogram
+  #       - /safe_teleop_base/local_costmap/costmap
+  #       - /move_base/local_costmap/costmap
+  #       - /move_base/global_costmap/costmap
+  #       - /particlecloud
+  #       - /base_scan/throttled
+  #       - /head_camera/rgb/throttled/camera_info
+  #       - /head_camera/depth_registered/throttled/camera_info
+  #       - /head_camera/rgb/throttled/image_rect_color/compressed
+  #       - /head_camera/depth_registered/throttled/image_rect/compressedDepth
+  #       - /server_name/smach/container_init
+  #       - /server_name/smach/container_status
+  #       - /server_name/smach/container_structure
+  #       - /audio
+  #       - /dual_fisheye_to_panorama/quater/output
   - name: head_camera_converter_plugin
     type: app_recorder/rosbag_video_converter_plugin
     plugin_args:
