@@ -9,13 +9,6 @@ plugins:
     type: app_notification_saver/service_notification_saver
   - name: smach_notification_saver_plugin
     type: app_notification_saver/smach_notification_saver
-  - name: respeaker_audio_recorder_plugin
-    type: app_recorder/audio_recorder_plugin
-    launch_args:
-      audio_path: /tmp
-      audio_title: go_to_kitchen_audio.wav
-      audio_topic_name: /audio
-      audio_format: wave
   - name: rosbag_recorder_plugin
     type: app_recorder/rosbag_recorder_plugin
     launch_args:
@@ -91,6 +84,15 @@ plugins:
       image_topic_name: /rviz/image/compressed
       image_fps: 30
       video_path: /tmp/go_to_kitchen_rviz.mp4
+  - name: respeaker_audio_converter_plugin
+    type: app_recorder/rosbag_audio_converter_plugin
+    plugin_args:
+      rosbag_path: /tmp
+      rosbag_title: go_to_kitchen_rosbag.bag
+      audio_topic_name: /audio
+      audio_sample_rate: 16000
+      audio_channels: 1
+      audio_path: /tmp/go_to_kitchen_audio.wav
   - name: result_recorder_plugin
     type: app_recorder/result_recorder_plugin
     plugin_args:
@@ -158,12 +160,12 @@ plugin_order:
     - move_base_cancel_plugin
     - service_notification_saver_plugin
     - smach_notification_saver_plugin
-    - respeaker_audio_recorder_plugin
     - rosbag_recorder_plugin
     - head_camera_converter_plugin
     - object_detection_converter_plugin
     - panorama_converter_plugin
     - rviz_converter_plugin
+    - respeaker_audio_converter_plugin
     - result_recorder_plugin
     - gdrive_uploader_plugin
     - tweet_notifier_plugin
@@ -174,12 +176,12 @@ plugin_order:
     - move_base_cancel_plugin
     - service_notification_saver_plugin
     - smach_notification_saver_plugin
-    - respeaker_audio_recorder_plugin
     - rosbag_recorder_plugin
     - head_camera_converter_plugin
     - object_detection_converter_plugin
     - panorama_converter_plugin
     - rviz_converter_plugin
+    - respeaker_audio_converter_plugin
     - result_recorder_plugin
     - gdrive_uploader_plugin
     - tweet_notifier_plugin
